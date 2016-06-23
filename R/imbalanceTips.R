@@ -11,13 +11,13 @@ imbalanceTips<-function(tree,reps=100){
   treemetrics<-imbalanceMetrics(tree)
   thrg<-threthold(tree,reps=100)
   if(length(which(as.vector(unlist(treemetrics[1:12]))<thrg[2,]
-                  |as.vector(unlist(treemetrics[1:12])>thrg[1,])))>1)
+                  |as.vector(unlist(treemetrics[1:12]))>thrg[1,]))>3)
   {
     ImbalanceTips<-NULL
-    for(i in 3:(tree$Nnode){
+    for(i in 3:(tree$Nnode)){
       thr<-threthold(timeprune(tree)$trees[[i]],reps=100)
-      if(!any(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]<thr[2,]|
-              unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]>thr[1,]))
+      if(length(which(as.vector(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12])<thr[2,]|
+                                as.vector(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]])))[1:12]>thr[1,]))>3)
       {
         ImbalanceTips<-c(ImbalanceTips, names(timeprune(tree)$trees)[i])
       }
