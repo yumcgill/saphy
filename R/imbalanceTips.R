@@ -1,7 +1,8 @@
 #' Extracts suspicious tips of imbalance in a given tree
 #'
-#' \code{tiplength} returns suspicious tips in a given tree
-#'
+#' \code{tiplength} returns suspicious tips in a given tree,
+#'                 the observed value and 95% threshold for each sequence
+#
 #' @param tree a phylogenetic tree (as a \code{phylo} object)
 #' @param repslications of bootstrapping
 #' @return a vector of tips name that causes the imbalance
@@ -29,4 +30,4 @@ imbalanceTips<-function(tree,reps=100){
     }
     return(list(ImbalanceTips,thr,obs))
    }
-  else (return("This tree is balanced",thr,obs))}
+  else (return(list("This tree is balanced",thr,obs)))}
