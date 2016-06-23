@@ -9,15 +9,17 @@
 #' @export
 imbalanceTips<-function(tree,reps=100){
   treemetrics<-imbalanceMetrics(tree)
-  if(length(which(as.vector(unlist(treemetrics[1:12]))<threthold(tree,reps=100)[2,]
-                  |as.vector(unlist(treemetrics[1:12])>threthold(tree,reps=100)[1,])))>1)
+  thrg<-threthold(tree,reps=100)
+  if(length(which(as.vector(unlist(treemetrics[1:12]))<thrg[2,]
+                  |as.vector(unlist(treemetrics[1:12])>thrg[1,])))>1)
   {
     ImbalanceTips<-NULL
-    for(i in 1:tree$Nnode){
-      if(!any(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]<threthold(timeprune(tree)$trees[[i]],reps=100)[2,]|
-              unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]>threthold(timeprune(tree)$trees[[i]],reps=100)[1,]))
+    for(i in 3:(tree$Nnode-1)){
+      thr<-threthold(timeprune(tree)$trees[[i]],reps=100)
+      if(!any(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]<thr[2,]|
+              unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]>thr[1,]))
       {
-        ImbalanceTips<-c(ImbalanceTips,timeprune(tree)$trees[[i]]$tip.label[1])
+        ImbalanceTips<-c(ImbalanceTips, names(timeprune(tree)$trees)[i])
       }
     }
     return(ImbalanceTips)}
