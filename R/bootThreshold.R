@@ -1,5 +1,4 @@
-###return bootstrap threshold of the metric###
-
+##return bootstrap threshold of the metric##
 threthold<-function(tree,reps){
   thre<-NULL;bstrees<-permuteTrees(tree)
   bslist<-lapply(bstrees,imbalanceMetrics)
