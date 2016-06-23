@@ -1,4 +1,12 @@
-#return suspicious tips##
+#' Extracts suspicious tips of imbalance in a given tree
+#'
+#' \code{tiplength} returns suspicious tips in a given tree
+#'
+#' @param tree a phylogenetic tree (as a \code{phylo} object)
+#' @param repslications of bootstrapping
+#' @return a vector of tips name that causes the imbalance
+#' @author Yu Luo (\email{yu.luo3@mail.mcgill.ca})
+#' @export
 imbalanceTips<-function(tree,reps=100){
   treemetrics<-imbalanceMetrics(tree)
   if(length(which(as.vector(unlist(treemetrics[1:12]))<threthold(tree,reps=100)[2,]
