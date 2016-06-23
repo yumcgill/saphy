@@ -12,5 +12,5 @@ threthold<-function(tree,reps){
     thre<-cbind(thre,rbind(qu,ql))
 
   }
-  col.names(thre)<-names(treemetrics)[1:12]
+  attr(thre,"dimnames")[[2]]<-names(treemetrics)[1:12]
   return(thre)}
