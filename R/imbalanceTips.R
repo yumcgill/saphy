@@ -14,7 +14,7 @@ imbalanceTips<-function(tree,reps=100){
                   |as.vector(unlist(treemetrics[1:12])>thrg[1,])))>1)
   {
     ImbalanceTips<-NULL
-    for(i in 3:(tree$Nnode-1)){
+    for(i in 3:(tree$Nnode){
       thr<-threthold(timeprune(tree)$trees[[i]],reps=100)
       if(!any(unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]<thr[2,]|
               unlist(imbalanceMetrics(timeprune(tree)$trees[[i]]))[1:12]>thr[1,]))
