@@ -11,6 +11,7 @@
 
 
 imbalanceTips<-function(tree,reps=100){
+  imbTips<-list()
   treemetrics<-imbalanceMetrics(tree)
   thrg<-threthold(tree,reps=100)
   if(length(which(as.vector(unlist(treemetrics[1:12]))<thrg[2,]
@@ -18,15 +19,16 @@ imbalanceTips<-function(tree,reps=100){
   {
     ImbalanceTips<-NULL
     seqtrees<-timeprune(tree)$trees[names(timeprune(tree)$trees)[3:tree$Nnode]]
-    thr<-lapply(seqtrees,function(x){threthold(x,reps)})
-    obs<-lapply(seqtrees,function(x){unlist(imbalanceMetrics(x)[1:12])})
+    imbTips$thr<-lapply(seqtrees,function(x){threthold(x,reps)})
+    imbTips$obs<-lapply(seqtrees,function(x){unlist(imbalanceMetrics(x)[1:12])})
     for(i in 3:(tree$Nnode)){
       if(length(which(obs[[i]]<thr[[i]][2,]|obs[[i]]>thr[[i]][1,]))>3)
       {
-        ImbalanceTips<-c(ImbalanceTips, names(timeprune(tree)$trees)[i])
+        imbTips$ImbalanceTips<-c(ImbalanceTips, names(timeprune(tree)$trees)[i])
 
       }
     }
-    return(c(ImbalanceTips,thr,obs))
    }
-  else (return(c("This tree is balanced",thr,obs)))}
+  else {imbTips$ImbalanceTips<-"This tree is balanced"}
+    return(imbTips)
+  }
